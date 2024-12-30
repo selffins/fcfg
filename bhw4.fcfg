@@ -1,0 +1,29 @@
+% start S
+
+# Grammar productions
+
+# S expansion
+
+S -> VP
+S -> NP[case=nom, num=?n] VP[num=?n]
+
+# VP expansion
+
+VP[tense=?t, num=?n] -> IV[tense=?t, num=?n]
+
+# NP expansion
+
+NP[gend=?g, case=?c, num=?n] -> N[gend=?g, case=?c, num=?n]
+
+# Lexical productions
+
+N[gend=fem,  case=nom, num=sg] -> 'devushka'
+N[gend=fem,  case=nom, num=pl] -> 'devushki'
+N[gend=fem,  case=acc, num=sg] -> 'devushku'
+
+N[gend=masc, case=nom, num=sg] -> 'malychik'
+N[gend=masc, case=nom, num=pl] -> 'malychiki'
+N[gend=masc, type=anim, case=acc, num=sg] -> 'malychika'
+
+IV[tense=pres, num=sg] -> 'xodit'
+IV[tense=pres, num=pl] -> 'xodjat'
