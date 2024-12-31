@@ -5,25 +5,80 @@
 # S expansion
 
 S -> VP
-S -> NP[case=nom, num=?n] VP[num=?n]
+S -> NP[case=nom, gend=?g, num=?n] VP[gend=?g, num=?n]
+S -> NP[case=dat, gend=?g, num=?n] VP[refl=true]
+S -> PP
 
 # VP expansion
 
 VP[tense=?t, num=?n] -> IV[tense=?t, num=?n]
+VP[tense=?t, gend=?g, num=?n] -> TV[tense=?t, gend=?g, num=?n] NP[case=acc]
+VP[tense=?t, gend=?g, num=?n, refl=true] -> TV[tense=?t, gend=?g, num=?n, refl=true] NP[gend=?g, case=nom, num=?n]
+VP[tense=?t, gend=?g, num=?n] -> NEG TV[tense=?t, gend=?g, num=?n] NP[case=acc]
+VP[tense=?t, gend=?g, num=?n] -> NEG TV[tense=?t, gend=?g, num=?n] NP[case=gen]
+
+VP[tense=?t, num=?n] -> DV[num=?n, tense=?t] NP[case=acc] NP[case=dat]
 
 # NP expansion
 
-NP[gend=?g, case=?c, num=?n] -> N[gend=?g, case=?c, num=?n]
+NP[case=?c, gend=?g, num=?n] -> N[case=?c, gend=?g, num=?n]
+NP[case=?c, gend=?g, num=?n] -> N[case=?c, gend=?g, num=?n] NP[case=gen]
+
+# PP expansion
+
+PP -> P NP[case=loc] EV[neg=false] NP[case=nom]
+PP -> P NP[case=loc] EV[neg=true] NP[case=gen]
 
 # Lexical productions
 
+# Nouns
+
 N[gend=fem,  case=nom, num=sg] -> 'devushka'
 N[gend=fem,  case=nom, num=pl] -> 'devushki'
+N[gend=fem,  case=gen, num=sg] -> 'devushki'
 N[gend=fem,  case=acc, num=sg] -> 'devushku'
+N[gend=fem,  case=dat, num=pl] -> 'devushkam'
+N[gend=fem,  case=dat, num=sg] -> 'devushke'
 
 N[gend=masc, case=nom, num=sg] -> 'malychik'
-N[gend=masc, case=nom, num=pl] -> 'malychiki'
+N[gend=masc, case=nom, num=pl] -> 'malychiki' | 'babushki' | 'blinchiki'
 N[gend=masc, type=anim, case=acc, num=sg] -> 'malychika'
+N[gend=masc, case=gen, num=sg] -> 'malychika'
+N[gend=masc, case=dat, num=sg] -> 'malychiku'
+N[gend=masc, case=dat, num=pl] -> 'malychikam' | 'babushkam'
+
+N[gend=neut, case=gen, num=sg] -> 'masla'
+N[gend=neut, case=nom, num=sg] -> 'maslo'
+
+N[gend=masc, type=inan, case=acc, num=sg] -> 'dom' | 'podarok'
+N[gend=masc, type=anim, case=gen, num=sg] -> 'doma'
+
+N[gend=masc, case=loc, num=sg] -> 'dome'
+N[gend=masc, case=gen, num=pl] -> 'domov' |'blinchikov' |  'malychikov'
+
+
+# Verbs
+
+NEG[neg=true] -> 'ne'
 
 IV[tense=pres, num=sg] -> 'xodit'
 IV[tense=pres, num=pl] -> 'xodjat'
+
+TV[tense=pres, num=sg] -> 'vidit'
+TV[tense=pres, num=pl] -> 'vidjat'
+TV[tense=past, gend=masc, num=sg] -> 'videl'
+TV[tense=past, gend=fem, num=sg] -> 'videla'
+TV[tense=past, num=pl] -> 'videli'
+
+TV[tense=pres,refl=true, num=sg] -> 'nravitsja'
+TV[tense=pres, refl=true, num=pl] -> 'nravjatsja'
+
+EV[neg=false] -> 'jesty'
+EV[neg=true] -> 'njet'
+
+DV[tense=pres, num=sg] -> 'darit'
+DV[tense=pres, num=pl] -> 'darjat'
+
+# Prepositions
+
+P -> 'v'
